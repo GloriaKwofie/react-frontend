@@ -22,7 +22,10 @@ function App() {
   }, []);
 
   return (
+    <>
+    <header></header>
     <div className="App">
+      
       <BrowserRouter>
         <div className="App">
           <div className="container">
@@ -30,15 +33,16 @@ function App() {
               <Route path="/" element={<Home />} />
             </Routes>
             <Routes>
-              <Route path="/" element={<Login />} />
+              <Route path="/Login" element={<Login />} />
             </Routes>
             <Routes>
-              <Route path="/" element={<SignUp />} />
+              <Route path="/SignUp" element={<SignUp />} />
             </Routes>
           </div>
         </div>
       </BrowserRouter>
     </div>
+    </>
   );
 }
 
