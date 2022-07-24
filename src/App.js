@@ -23,7 +23,7 @@ function App() {
 
   return (
     <>
-    <header></header>
+    <header/>
     <div className="App">
       
       <BrowserRouter>

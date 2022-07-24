@@ -1,9 +1,29 @@
-import React from "react";
+import React, { useState } from 'react';
+import { signIn } from '../Api';
+import Home from './Home';
 
+const Form = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isSigned, setIsSigned] = useState(false);
+  const [isSignError, setIsSignError] = useState(false);
 
-const Login = () => {
+  const signInUser = async (e) => {
+    e.preventDefault();
+    const body = await signIn(email, password);
+    console.log(body);
+    if (body.isAuthenticated) {
+      setIsSigned(true);
+    } else {
+      setIsSignError(true);
+    }
+  };
+
   return (
-    <div className="card-sign-in">
+    <>
+      {!isSigned ? (
+        <>
+          <div className="card-sign-in">
       <div className="card-body">
         <div className="container-title-card">
           <h1 class="card-title">Sign In</h1>
@@ -13,6 +33,7 @@ const Login = () => {
           <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
             <input
+              onChange={(e) => setEmail(e.target.value)}
               type="email"
               class="form-control"
               id="exampleInputEmail1"
@@ -23,6 +44,7 @@ const Login = () => {
           <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
             <input
+              onChange={(e) => setPassword(e.target.value)}
               type="password"
               class="form-control"
               id="exampleInputPassword1"
@@ -33,43 +55,22 @@ const Login = () => {
             
           </div>
           <div className="sign-in-button-container ">
-            <button type="submit" class="btn btn-primary btn-sm sign-in-button">
+            <button onClick={signInUser} type="submit" class="btn btn-primary btn-sm sign-in-button">
               <strong>Submit</strong>
             </button>
           </div>
+          {isSignError && (<div className='formResponse'>User does not Exist</div>)}
         </form>
       </div>
-    </div>
+      </div>
+        </>
+      ) : (
+        <Home />
+      )}
+    </>
   );
 };
 
+export default Form;
 
-/*import { useState } from "react";
 
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleSubmit = () => {
-    fetch();
-  };
-  return (
-    <form action="" onSubmit={() => {}}>
-      <input
-        value={email}
-        type="text"
-        placeholder="email"
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        value={password}
-        type="password"
-        placeholder="password"
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button type="submit">Login</button>
-    </form>
-  );
-};*/
-
-export default Login;
